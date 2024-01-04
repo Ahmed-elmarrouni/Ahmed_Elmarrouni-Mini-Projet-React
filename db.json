@@ -1,0 +1,121 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "price": 999.99,
+      "description": "High-performance laptop with the latest specifications.",
+      "stock": 50,
+      "image": "/public/laptop.png"
+    },
+    {
+      "id": 2,
+      "name": "Smartphone",
+      "price": 499.99,
+      "description": "Feature-rich smartphone with a large display.",
+      "stock": 100,
+      "image": "/public/Smartphone.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Headphones",
+      "price": 79.99,
+      "description": "Wireless over-ear headphones with noise cancellation.",
+      "stock": 30,
+      "image": "/public/Headphones.png"
+    },
+    {
+      "id": 4,
+      "name": "Ipad",
+      "price": 399.99,
+      "description": "Feature-rich smartphone with a large display.",
+      "stock": 100,
+      "image": "/public/ipad.jpeg"
+    }
+  ],
+  "users": [
+    {
+      "id": 2,
+      "username": "jane_smith",
+      "email": "jane.smith@example.com",
+      "password": "hashed_password",
+      "address": "456 Oak St, Townsville",
+      "zipCode": "93010",
+      "city": "New Work"
+    },
+    {
+      "id": 4,
+      "username": "Ismail",
+      "email": "ismail@gmail.com",
+      "password": "123",
+      "address": " soukna 222",
+      "city": "Rabat",
+      "zipCode": "641252"
+    },
+    {
+      "id": 5,
+      "username": "Ahmed_elmrn",
+      "email": "ahmedelmarrouni1@gmail.com",
+      "password": "Qwer1133",
+      "address": "Av far 212",
+      "city": "Tetouan",
+      "zipCode": "641252"
+    }
+  ],
+  "carts": [
+    {
+      "user_id": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2
+        },
+        {
+          "product_id": 3,
+          "quantity": 1
+        }
+      ],
+      "total": 1179.97
+    },
+    {
+      "user_id": 2,
+      "items": [
+        {
+          "product_id": 2,
+          "quantity": 1
+        }
+      ],
+      "total": 499.99
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "products": [
+        {
+          "product_id": 1,
+          "quantity": 2
+        },
+        {
+          "product_id": 3,
+          "quantity": 1
+        }
+      ],
+      "total": 1179.97,
+      "order_date": "2023-01-15T08:30:00Z"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "products": [
+        {
+          "product_id": 2,
+          "quantity": 1
+        }
+      ],
+      "total": 499.99,
+      "order_date": "2023-02-01T12:15:00Z"
+    }
+  ]
+}
