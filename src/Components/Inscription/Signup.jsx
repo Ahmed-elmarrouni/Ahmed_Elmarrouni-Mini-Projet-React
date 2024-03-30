@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
@@ -69,7 +70,7 @@ const Signup = () => {
 
     return (
         <>
-            <h2>"Join our community today! Create an account to unlock a world of exciting deals, personalized recommendations, and a seamless shopping experience. Welcome aboard!"</h2>
+            <h2>Join our community today! Create an account to unlock a world of exciting deals, personalized recommendations, and a seamless shopping experience. Welcome aboard!</h2>
             <Messages ref={msgs} />
             <Messages ref={successMsg} />
             <div className='SignupContainer'>
@@ -84,7 +85,7 @@ const Signup = () => {
                     </div>
 
                     <div className="col-md-6" style={{ marginBottom: '10px' }}>
-                        <label htmlFor="inputEmail4" className="form-label" keyfilter="email">Enter your email :</label><br />
+                        <label htmlFor="inputEmail4" className="form-label" >Enter your email :</label><br />
                         <InputText type='email' id="inputEmail4" className="form-control" required value={emailInput} onChange={(e) => setEmailInput(e.target.value)} />
                     </div>
 

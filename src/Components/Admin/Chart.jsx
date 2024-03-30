@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Chart } from 'primereact/chart';
 
 function ChartComponent() {
     // Product Stock
     const [productsData, setProductsData] = useState("");
-    const [chartOptions, setChartOptions] = useState({});
+    const [chartOptions,] = useState({});
 
     useEffect(() => {
-        getData();
+        getProdData();
+        getUsersData();
+
     }, []);
 
-    function getData() {
+    function getProdData() {
         axios.get(`http://localhost:3000/products`)
             .then((res) => {
                 const data = {
@@ -21,16 +23,10 @@ function ChartComponent() {
                             label: 'Stock',
                             data: res.data.map(product => product.stock),
                             backgroundColor: [
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
-                                'rgba(153, 102, 255, 0.2)'
                             ],
                             borderColor: [
-                                'rgb(255, 159, 64)',
                                 'rgb(75, 192, 192)',
-                                'rgb(54, 162, 235)',
-                                'rgb(153, 102, 255)'
                             ],
                             borderWidth: 2
                         }
@@ -42,12 +38,12 @@ function ChartComponent() {
             .catch((error) => console.error("Error fetching data:", error));
     }
 
-    // Users
+    // Users orders
     const [usersData, setUsersData] = useState("")
 
-    useEffect(() => {
-        getUsersData();
-    }, []);
+    // useEffect(() => {
+    //     getUsersData();
+    // }, []);
 
     function getUsersData() {
         axios.get(`http://localhost:3000/orders`)
@@ -72,16 +68,10 @@ function ChartComponent() {
                             label: 'Total price',
                             data: Object.values(userOrders),
                             backgroundColor: [
-                                'rgba(255, 159, 6, 0.2)',
-                                'rgba(75, 192, 19, 0.2)',
                                 'rgba(54, 162, 23, 0.2)',
-                                'rgba(153, 102, 25, 0.2)'
                             ],
                             borderColor: [
-                                'rgb(255, 159, 4)',
-                                'rgb(75, 192, 92)',
                                 'rgb(54, 162, 35)',
-                                'rgb(153, 102, 55)'
                             ],
                             borderWidth: 2
                         }
@@ -94,13 +84,15 @@ function ChartComponent() {
     }
     return (
         <>
-            <h1>Chart</h1>
-            <div style={{ display: "flex" }}>
-                <div className="card" style={{ width: "50%" }}>
+            <div className="card">
+                <h1 style={{ textAlign: "center" }}>Chart</h1>
+            </div>
+            <div >
+                <div className="card">
                     <p>Products stock</p>
                     <Chart type="bar" data={productsData} options={chartOptions} />
                 </div>
-                <div className="card" style={{ width: "50%" }}>
+                <div className="card" >
                     <p>Total Orders per User</p>
                     <Chart type="bar" data={usersData} options={chartOptions} />
                 </div>

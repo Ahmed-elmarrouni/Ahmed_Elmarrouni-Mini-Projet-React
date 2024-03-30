@@ -9,23 +9,26 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { Link } from 'react-router-dom';
 
-export default function Customers() {
-    const emptyProduct = {
+
+export default function Costomers() {
+    const emptyCostomer = {
         id: null,
         username: '',
         email: '',
         city: ''
     };
 
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
+    const [costomers, setCostomers] = useState(null);
+    const [costomerDialog, setcostomerDialog] = useState(false);
+    const [deletecostomerDialog, setDeletecostomerDialog] = useState(false);
+    const [deletecostomersDialog, setDeletecostomersDialog] = useState(false);
+    const [costomer, setCostomer] = useState(emptyCostomer);
+    const [selectedcostomers, setSelectedcostomers] = useState(null);
     const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState('');
     const toast = useRef(null);
     const dt = useRef(null);
 
@@ -43,90 +46,101 @@ export default function Customers() {
         { label: 'Essaouira', value: 'Essaouira' },
     ];
 
+    const [filteredCostomers, setFilteredCostomers] = useState([]);
+
     useEffect(() => {
         getData();
     }, []);
 
     function getData() {
         axios.get(`http://localhost:3000/users`)
-            .then((res) => setProducts(res.data))
+            .then((res) => {
+                setCostomers(res.data), setFilteredCostomers(res.data);
+            })
             .catch((error) => console.error('Error fetching data:', error));
+
+        // .then((res) => setCostomers(res.data))
+        // .catch((error) => console.error('Error fetching data:', error));
     }
 
-    const handleSearchProd = (e) => {
+    const handleSearchCstmr = (e) => {
         const searchText = e.target.value.toLowerCase();
-        const filteredList = products.filter((product) =>
-            product.username.toLowerCase().includes(searchText) ||
-            product.email.toLowerCase().includes(searchText) ||
-            product.city.toLowerCase().includes(searchText)
+        const filteredCostomers = costomers.filter((costomer) =>
+            costomer.username.toLowerCase().includes(searchText) ||
+            costomer.email.toLowerCase().includes(searchText) ||
+            costomer.city.toLowerCase().includes(searchText)
         );
 
-        setProducts(filteredList);
+        setFilteredCostomers(filteredCostomers);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setcostomerDialog(false);
     };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
+    const hideDeletecostomerDialog = () => {
+        setDeletecostomerDialog(false);
     };
 
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
+    const hideDeletecostomersDialog = () => {
+        setDeletecostomersDialog(false);
     };
 
-    const saveProduct = () => {
+    const saveCostomer = () => {
         setSubmitted(true);
 
-        if (product.username.trim()) {
-            let _products = [...products];
-            let _product = { ...product };
+        if (costomer.username.trim() && costomer.email && costomer.city) {
+            let _costomers = [...costomers];
+            let _costomer = { ...costomer };
 
-            if (product.id) {
-                const index = findIndexById(product.id);
+            axios.put(`http://localhost:3000/users/${costomer.id}`, _costomer)
+                .then((response) => {
+                    console.log('Updat Success', response);
+                    const index = findIndexById(costomer.id);
+                    _costomers[index] = _costomer;
+                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Costomer Update, Refresh the page', life: 3000 });
 
-                _products[index] = _product;
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                _product.id = createId();
-                _products.push(_product);
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
+                    setCostomers(_costomers);
+                    setcostomerDialog(false);
+                    setCostomer(emptyCostomer);
 
-            setProducts(_products);
-            setProductDialog(false);
-            setProduct(emptyProduct);
+                })
+                .catch((error) => {
+                    console.error('Update Error', error);
+                })
+            // setCostomers(_costomers);
+            // setcostomerDialog(false);
+            // setCostomer(emptyCostomer);
         }
     };
 
-    const editProduct = (product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
+    const editcostomer = (costomer) => {
+        setCostomer({ ...costomer });
+        setcostomerDialog(true);
     };
 
-    const confirmDeleteProduct = (product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
+    const confirmdeleteCostomer = (costomer) => {
+        setCostomer(costomer);
+        setDeletecostomerDialog(true);
     };
 
-    const deleteProduct = () => {
-        axios.delete(`http://localhost:3000/users/${product.id}`)
+    const deleteCostomer = () => {
+        axios.delete(`http://localhost:3000/users/${costomer.id}`)
             .then(() => {
-                setProducts(products.filter((val) => val.id !== product.id));
-                setDeleteProductDialog(false);
-                setProduct(emptyProduct);
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                setCostomers(costomers.filter((val) => val.id !== costomer.id));
+                setDeletecostomerDialog(false);
+                setCostomer(emptyCostomer);
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Costomer Deleted', life: 3000 });
             })
-            .catch((error) => console.error('Error deleting product:', error));
+            .catch((error) => console.error('Error deleting costomer:', error));
     };
 
     const findIndexById = (id) => {
         let index = -1;
 
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+        for (let i = 0; i < costomers.length; i++) {
+            if (costomers[i].id === id) {
                 index = i;
                 break;
             }
@@ -135,204 +149,241 @@ export default function Customers() {
         return index;
     };
 
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    // const createId = () => {
+    //     let id = '';
+    //     let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
+    //     for (let i = 0; i < 5; i++) {
+    //         id += chars.charAt(Math.floor(Math.random() * chars.length));
+    //     }
 
-        return id;
+    //     return id;
+    // };
+
+
+    const exportPDF = () => {
+        const columns = [
+            { title: 'ID', dataKey: 'id' },
+            { title: 'Name', dataKey: 'username' },
+            { title: 'Email', dataKey: 'email' },
+            { title: 'City', dataKey: 'city' },
+        ];
+
+        const data = costomers.map((costomer) => ({
+            id: costomer.id,
+            username: costomer.username,
+            email: costomer.email,
+            city: costomer.city,
+        }));
+
+        const pdf = new jsPDF();
+        pdf.autoTable({
+            head: [columns.map((col) => col.title)],
+            body: data.map((row) => columns.map((col) => row[col.dataKey])),
+        });
+        pdf.save('table.pdf');
     };
 
-    const exportCSV = () => {
-        dt.current.exportCSV();
-    };
+
 
     const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
+        setDeletecostomersDialog(true);
     };
 
-    const deleteSelectedProducts = () => {
-        if (selectedProducts && selectedProducts.length > 0) {
-            const deletePromises = selectedProducts.map((selectedProduct) =>
-                axios.delete(`http://localhost:3000/users/${selectedProduct.id}`)
+    const deleteSelectedcostomers = () => {
+        if (selectedcostomers && selectedcostomers.length > 0) {
+            const deletePromises = selectedcostomers.map((selectedcostomer) =>
+                axios.delete(`http://localhost:3000/users/${selectedcostomer.id}`)
             );
 
             Promise.all(deletePromises)
                 .then(() => {
-                    const remainingProducts = products.filter((product) => !selectedProducts.includes(product));
-                    setProducts(remainingProducts);
-                    setDeleteProductsDialog(false);
-                    setSelectedProducts(null);
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+                    const remainingcostomers = costomers.filter((costomer) => !selectedcostomers.includes(costomer));
+                    setCostomers(remainingcostomers);
+                    setDeletecostomersDialog(false);
+                    setSelectedcostomers(null);
+                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'costomers Deleted', life: 3000 });
                 })
-                .catch((error) => console.error('Error deleting selected products:', error));
+                .catch((error) => console.error('Error deleting selected costomers:', error));
         }
     };
 
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
+        let _costomer = { ...costomer };
 
-        _product[name] = val;
+        _costomer[name] = val;
 
-        setProduct(_product);
+        setCostomer(_costomer);
     };
 
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
+                <Link to="/Dashboard/NewCostom">
+                    <Button
+                        label='Add New Costomer'
+                        icon="pi pi-user-plus"
+                    />
+                </Link>
                 <Button
                     label="Delete"
                     icon="pi pi-trash"
                     severity="danger"
                     onClick={confirmDeleteSelected}
-                    disabled={!selectedProducts || !selectedProducts.length}
+                    disabled={!selectedcostomers || !selectedcostomers.length}
                 />
             </div>
         );
     };
 
+
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
+        return (
+            <Button
+                icon="pi pi-download"
+                label="Export PDF"
+                className="p-button-help"
+                onClick={exportPDF}
+            />
+        );
     };
 
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" outlined className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-pencil" outlined className="mr-2" onClick={() => editcostomer(rowData)} />
+                <Button icon="pi pi-trash" outlined severity="danger" onClick={() => confirmdeleteCostomer(rowData)} />
             </React.Fragment>
         );
     };
 
     const headerTemplate = (
         <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Manage Products</h4>
+            <h4 className="m-0">Manage Costomers</h4>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText
                     type="search"
-                    onInput={(e) => setGlobalFilter(e.target.value)}
-                    onChange={(e) => handleSearchProd(e)}
+                    onChange={(e) => handleSearchCstmr(e)}
                     placeholder="Search..."
                 />
             </span>
         </div>
     );
 
-    const productDialogFooter = (
+    const costomerDialogFooter = (
         <React.Fragment>
             <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
+            <Button label="Save" icon="pi pi-check" onClick={saveCostomer} />
         </React.Fragment>
     );
 
-    const deleteProductDialogFooter = (
+    const deletecostomerDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductDialog} />
-            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
+            <Button label="No" icon="pi pi-times" outlined onClick={hideDeletecostomerDialog} />
+            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteCostomer} />
         </React.Fragment>
     );
 
-    const deleteProductsDialogFooter = (
+    const deletecostomersDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
-            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
+            <Button label="No" icon="pi pi-times" outlined onClick={hideDeletecostomersDialog} />
+            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedcostomers} />
         </React.Fragment>
     );
 
     return (
-        <div>
-            <Toast ref={toast} />
-            <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+        <>
+            <div>
+                <Toast ref={toast} />
+                <div className="card">
+                    <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
-                <DataTable
-                    ref={dt}
-                    value={products}
-                    selection={selectedProducts}
-                    onSelectionChange={(e) => setSelectedProducts(e.value)}
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-                    globalFilter={globalFilter}
-                    header={headerTemplate}
-                >
-                    <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="id" header="id" sortable style={{ minWidth: '12rem' }}></Column>
-                    <Column field="username" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="email" header="Email" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="city" header="City" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
-                </DataTable>
+                    <DataTable
+                        ref={dt}
+                        value={filteredCostomers}
+                        selection={selectedcostomers}
+                        onSelectionChange={(e) => setSelectedcostomers(e.value)}
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} costomers"
+                        header={headerTemplate}
+                    >
+                        <Column selectionMode="multiple" exportable={false}></Column>
+                        <Column field="id" header="id" sortable style={{ minWidth: '12rem' }}></Column>
+                        <Column field="username" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
+                        <Column field="email" header="Email" sortable style={{ minWidth: '16rem' }}></Column>
+                        <Column field="city" header="City" sortable style={{ minWidth: '16rem' }}></Column>
+                        <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+                    </DataTable>
+                </div>
+
+                <Dialog visible={costomerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="costomer Details" modal className="p-fluid" footer={costomerDialogFooter} onHide={hideDialog}>
+                    <div className="field" style={{ marginBottom: '10px' }}>
+                        <label htmlFor="username" className="font-bold">
+                            Name
+                        </label>
+                        
+                        <InputText
+                            id="name"
+                            value={costomer.username}
+                            onChange={(e) => onInputChange(e, 'username')}
+                            required
+                            autoFocus
+                            className={classNames({ 'p-invalid': submitted && !costomer.username })}
+                        />
+                        {submitted && !costomer.username && <small className="p-error">User name is required.</small>}
+                    </div>
+                    <div className="field" style={{ marginBottom: '10px' }}>
+                        <label htmlFor="email" className="font-bold">
+                            Email
+                        </label>
+                        <InputText
+                            id="email"
+                            value={costomer.email}
+                            onChange={(e) => onInputChange(e, 'email')}
+                            required
+                            autoFocus
+                            className={classNames({ 'p-invalid': submitted && !costomer.email })}
+                        />
+                        {submitted && !costomer.email && <small className="p-error">Email is required.</small>}
+                    </div>
+                    <div className="field">
+                        <label htmlFor="city" className="font-bold">
+                            Choose customer City:
+                        </label>
+                        <Dropdown
+                            id="inputState"
+                            options={cities}
+                            value={costomer.city}
+                            onChange={(e) => onInputChange(e, 'city')}
+                            required
+                            placeholder="Choose..."
+                            className="form-select"
+                            style={{ width: '100%' }}
+                        />
+                        {submitted && !costomer.city && <small className="p-error">City is required.</small>}
+                    </div>
+                </Dialog>
+
+                <Dialog visible={deletecostomerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deletecostomerDialogFooter} onHide={hideDeletecostomerDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                        {costomer && (
+                            <span>
+                                Are you sure you want to delete <b>{costomer.username}</b>?
+                            </span>
+                        )}
+                    </div>
+                </Dialog>
+
+                <Dialog visible={deletecostomersDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deletecostomersDialogFooter} onHide={hideDeletecostomersDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                        {costomer && <span>Are you sure you want to delete the selected costomers?</span>}
+                    </div>
+                </Dialog>
             </div>
-
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <div className="field" style={{ marginBottom: '10px' }}>
-                    <label htmlFor="username" className="font-bold">
-                        Name
-                    </label>
-                    <InputText
-                        id="name"
-                        value={product.username}
-                        onChange={(e) => onInputChange(e, 'username')}
-                        required
-                        autoFocus
-                        className={classNames({ 'p-invalid': submitted && !product.username })}
-                    />
-                    {submitted && !product.username && <small className="p-error">User name is required.</small>}
-                </div>
-                <div className="field" style={{ marginBottom: '10px' }}>
-                    <label htmlFor="email" className="font-bold">
-                        Email
-                    </label>
-                    <InputText
-                        id="email"
-                        value={product.email}
-                        onChange={(e) => onInputChange(e, 'email')}
-                        required
-                        autoFocus
-                        className={classNames({ 'p-invalid': submitted && !product.email })}
-                    />
-                    {submitted && !product.email && <small className="p-error">Email is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="city" className="font-bold">
-                        Choose customer City:
-                    </label>
-                    <Dropdown
-                        id="inputState"
-                        options={cities}
-                        value={product.city}
-                        onChange={(e) => onInputChange(e, 'city')}
-                        required
-                        placeholder="Choose..."
-                        className="form-select"
-                        style={{ width: '100%' }}
-                    />
-                    {submitted && !product.city && <small className="p-error">City is required.</small>}
-                </div>
-            </Dialog>
-
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && (
-                        <span>
-                            Are you sure you want to delete <b>{product.username}</b>?
-                        </span>
-                    )}
-                </div>
-            </Dialog>
-
-            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && <span>Are you sure you want to delete the selected products?</span>}
-                </div>
-            </Dialog>
-        </div>
+        </>
     );
 }
 

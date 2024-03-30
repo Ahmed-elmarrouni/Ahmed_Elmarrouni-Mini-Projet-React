@@ -1,12 +1,18 @@
-import React from "react"
-import SideBar from "./SideBar"
+import { Outlet } from "react-router-dom";
+import SideBar from "./SideBar";
+
 function Dashboard() {
+
     return (
         <>
-            <SideBar />
-            
+            <div className="flex">
+                <SideBar />
+                <Outlet />
+            </div>
+
         </>
-    )
+    );
 }
 
-export default Dashboard
+export default Dashboard;
+

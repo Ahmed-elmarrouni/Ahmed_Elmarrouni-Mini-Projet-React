@@ -1,39 +1,26 @@
 import { Button } from "primereact/button";
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Messages } from 'primereact/messages';
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import 'primeicons/primeicons.css';
-import { DataView } from 'primereact/dataview';
+import { useDispatch, useSelector } from "react-redux";
+import { handleDeleteCart } from "../../reducers/cartSlice";
+import { Toast } from 'primereact/toast';
+import { useRef, useState } from "react";
 
 function Purchases() {
-    const msgs = useRef(null);
-    const [stateOrders, setStateOrders] = useState([]);
+    const dispatch = useDispatch()
+    const { cart } = useSelector((state) => state.cart);
 
-    useEffect(() => {
-        getData();
-    }, []);
+    const navigate = useNavigate();
 
-    function getData() {
-        axios.get(`http://localhost:3000/orders`)
-            .then((res) => setStateOrders(res.data))
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-                if (msgs.current) {
-                    msgs.current.show([
-                        { sticky: true, severity: 'error', summary: 'Error', detail: 'There are no orders', closable: false }
-                    ]);
-                }
-            });
-    }
+    const toast = useRef(null);
 
 
-    // Delete Prod function
-    // const onDeleteProd = (index) => {
-    // Define the logic for deleting a product
-    // };
+    const handleBuyProd = (id) => {
+        navigate(`/CheckoutPg/${id}`);
+    };
 
-    // const totalPrice = stateOrders.reduce((sum, product) => sum + product.price, 0);
+
+
 
     return (
         <>
@@ -41,39 +28,40 @@ function Purchases() {
             <Link to="/">
                 <Button label="Back to home page" icon="pi pi-arrow-left" />
             </Link>
-            {/* Total price display */}
-            {/* <div className="card flex p-4">
-                <h1>Total price : {totalPrice.toFixed(2)}</h1>
-            </div> */}
-            <Messages ref={msgs} />
+            {/* * * */}
+            <Toast ref={toast} />
 
-
-            <div className="card flex p-2">
-                {stateOrders.map((product, index) => (
-                    <div className="p-4 border-1 surface-border surface-card border-round" id="cardProducts" key={product.id}>
-                        <div className="flex flex-column align-items-center gap-3 py-5">
+            {/*  */}
+            <div className="card" >
+                <div className="p-4 border-1 surface-border surface-card border-round" id="cardproductss" >
+                    {cart.map((product) => (
+                        <div className="flex flex-column align-items-center gap-3 py-5" style={{ display: "flex", border: "1px ridge" }} key={product.id}>
                             <img
                                 id="prodImg"
-                                className="w-4  shadow-2 border-round"
+                                className="card w-4  shadow-2 border-round"
                                 src={product.image}
-                                alt="Product"
-                                style={{ width: "100%" }}
-                                preview
+                                alt="products"
+                                style={{ width: "18rem", height: "18rem", border: "2px solid", margin: "20px", boxShadow: "5px 10px #888888" }}
                             />
-                            <div className="text-2xl font-bold"><h3>{product.name}</h3></div>
-                            <div className="text-2xl font-bold" style={{ marginBottom: "10px" }}><b>Price : </b>{product.price} Dh</div>
-                            <div className="text-2xl font-bold"><i><b>Description : </b>{product.description}</i></div>
+                            <div className="card">
+                                <h1 className="text-2xl font-bold">{product.name}</h1>
+                                <h3 className="text-2xl font-bold" style={{ marginBottom: "10px" }}><b>Price : </b>{product.price} Dh</h3>
+                                <div className="text-2xl font-bold"><i><b>Description : </b>{product.description}</i></div>
+                                <br></br>
+                                <br></br>
+
+                                <div style={{ display: "flex" }}>
+                                    <Button severity="warning" label="Buy" style={{ width: "40%" }} onClick={() => handleBuyProd(product.id)} />
+                                    <Button onClick={() => dispatch(handleDeleteCart(product.id))} className="deleteBtn" severity="danger" label="Delete" style={{ width: "40%", marginLeft: "30px" }} />
+                                </div>
+
+                            </div>
                         </div>
-                        <Button className="deleteBtn" severity="danger" onClick={() => onDeleteProd(index)}>Delete </Button>
-                    </div>
                 ))}
+                    </div>
             </div>
         </>
     );
 }
 
 export default Purchases;
-
-
-
-
