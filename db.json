@@ -1,15 +1,15 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Laptop",
-      "price": "550",
+      "price": "5464",
       "description": "Power-packed laptop with cutting-edge specifications for seamless performance.",
       "stock": "88",
       "image": "/public/laptop.png"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Iphone 12",
       "price": 499.99,
       "description": "Feature-rich smartphone with a stunning large display for an immersive experience.",
@@ -17,7 +17,7 @@
       "image": "/public/Smartphone.jpg"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Headphones",
       "price": 79.99,
       "description": "Wireless over-ear headphones with noise cancellation for an uninterrupted audio journey",
@@ -25,7 +25,7 @@
       "image": "/public/Headphones.png"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Ipad",
       "price": 399.99,
       "description": " Sleek iPad with advanced features, perfect for work, creativity, and entertainment.",
@@ -33,7 +33,7 @@
       "image": "/public/ipad.jpeg"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Air pods",
       "price": 129.99,
       "description": "Wireless Air Pods with noise cancellation, delivering an immersive and crystal-clear audio.",
@@ -41,7 +41,7 @@
       "image": "/public/airpods.png"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "USB",
       "price": 19.99,
       "description": "Reliable wireless USB for hassle-free data transfer and seamless connectivity.",
@@ -49,7 +49,7 @@
       "image": "/public/usb.png"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Web cam",
       "price": 99.99,
       "description": "High-quality wireless web camera for enhanced video conferencing and streaming.",
@@ -57,7 +57,7 @@
       "image": "/public/webcam.png"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Keyboard",
       "price": 79.99,
       "description": "Wireless keyboard for comfortable and efficient typing, boosting your productivity.",
@@ -65,7 +65,7 @@
       "image": "/public/keyboard.png"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "LED Flashlights",
       "price": 129.99,
       "description": "Wireless Air Pods with noise cancellation, delivering an immersive and crystal-clear audio.",
@@ -73,7 +73,7 @@
       "image": "/public/light.png"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "3D Printer",
       "price": 19.99,
       "description": "Reliable wireless USB for hassle-free data transfer and seamless connectivity.",
@@ -81,7 +81,7 @@
       "image": "/public/printer.png"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "X Box",
       "price": 99.99,
       "description": "High-quality wireless web camera for enhanced video conferencing and streaming.",
@@ -89,7 +89,7 @@
       "image": "/public/xbox.png"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "PlayStation 5",
       "price": 79.99,
       "description": "Wireless keyboard for comfortable and efficient typing, boosting your productivity.",
@@ -97,7 +97,7 @@
       "image": "/public/ps.png"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Smart Glasses",
       "price": 999.99,
       "description": "Power-packed laptop with cutting-edge specifications for seamless performance.",
@@ -105,7 +105,7 @@
       "image": "/public/glasses.png"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Movie Projectors",
       "price": 499.99,
       "description": "Feature-rich smartphone with a stunning large display for an immersive experience.",
@@ -113,7 +113,7 @@
       "image": "/public/projector.png"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Smart Watch",
       "price": 79.99,
       "description": "Wireless over-ear headphones with noise cancellation for an uninterrupted audio journey",
@@ -121,7 +121,7 @@
       "image": "/public/watch.png"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": " Wifi router",
       "price": 399.99,
       "description": " Sleek iPad with advanced features, perfect for work, creativity, and entertainment.",
@@ -129,7 +129,7 @@
       "image": "/public/router.png"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Microphones",
       "price": 129.99,
       "description": "Wireless Air Pods with noise cancellation, delivering an immersive and crystal-clear audio.",
@@ -137,7 +137,7 @@
       "image": "/public/mic.png"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Camera",
       "price": 19.99,
       "description": "Reliable wireless USB for hassle-free data transfer and seamless connectivity.",
@@ -145,7 +145,7 @@
       "image": "/public/camera.png"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Go pro",
       "price": 99.99,
       "description": "High-quality wireless web camera for enhanced video conferencing and streaming.",
@@ -153,7 +153,7 @@
       "image": "/public/goPro1.png"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Bluetooth Speaker",
       "price": 79.99,
       "description": "Wireless keyboard for comfortable and efficient typing, boosting your productivity.",
@@ -161,7 +161,7 @@
       "image": "/public/BluetoothSpeaker.png"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Wifi Adapter",
       "price": 999.99,
       "description": "Power-packed laptop with cutting-edge specifications for seamless performance.",
@@ -169,7 +169,7 @@
       "image": "/public/wifiAdapter.png"
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Plug Adapter",
       "price": 499.99,
       "description": "Feature-rich smartphone with a stunning large display for an immersive experience.",
@@ -177,7 +177,7 @@
       "image": "/public/PlugAdapter.png"
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Headphones",
       "price": 79.99,
       "description": "Wireless over-ear headphones with noise cancellation for an uninterrupted audio journey",
@@ -185,7 +185,7 @@
       "image": "/public/portAdaptor.png"
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Ipad",
       "price": 399.99,
       "description": " Sleek iPad with advanced features, perfect for work, creativity, and entertainment.",
@@ -193,7 +193,7 @@
       "image": "/public/casque.png"
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "Unite centrale",
       "price": 129.99,
       "description": "Wireless Air Pods with noise cancellation, delivering an immersive and crystal-clear audio.",
@@ -201,7 +201,7 @@
       "image": "/public/uniteCentral.png"
     },
     {
-      "id": 26,
+      "id": "26",
       "name": "Desktop Speakers",
       "price": 19.99,
       "description": "Reliable wireless USB for hassle-free data transfer and seamless connectivity.",
@@ -209,7 +209,7 @@
       "image": "/public/speakers.png"
     },
     {
-      "id": 27,
+      "id": "27",
       "name": "Mouse",
       "price": 79.99,
       "description": "Wireless keyboard for comfortable and efficient typing, boosting your productivity.",
@@ -217,7 +217,7 @@
       "image": "/public/mouse.png"
     },
     {
-      "id": 28,
+      "id": "28",
       "name": "Desktop Screen",
       "price": 99.99,
       "description": "High-quality wireless web camera for enhanced video conferencing and streaming.",
@@ -227,7 +227,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "Ahmed_elmrn",
       "email": "ahmedelmarrouni1@gmail.com",
       "password": "Qwer1133",
@@ -236,7 +236,7 @@
       "zipCode": "641252"
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "Mohammed",
       "email": "mohamedelmarrouni1@gmail.com",
       "password": "Qj5UI3Qd",
@@ -245,7 +245,7 @@
       "zipCode": "93030"
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "Fahid",
       "email": "Fahd@gmail.com",
       "password": "QWER23fh",
@@ -254,7 +254,7 @@
       "zipCode": "93030"
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "Admin",
       "email": "admin@gmail.com",
       "password": "admin",
@@ -276,7 +276,8 @@
           "quantity": 1
         }
       ],
-      "total": 1179.97
+      "total": 1179.97,
+      "id": "6159"
     },
     {
       "user_id": 2,
@@ -294,7 +295,8 @@
           "quantity": 8
         }
       ],
-      "total": 1499.99
+      "total": 1499.99,
+      "id": "321b"
     },
     {
       "user_id": 3,
@@ -304,7 +306,8 @@
           "quantity": 3
         }
       ],
-      "total": 959.99
+      "total": 959.99,
+      "id": "16d7"
     },
     {
       "user_id": 4,
@@ -318,12 +321,13 @@
           "quantity": 7
         }
       ],
-      "total": 959.99
+      "total": 959.99,
+      "id": "1c3a"
     }
   ],
   "orders": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": 1,
       "products": [
         {
@@ -339,7 +343,7 @@
       "order_date": "2023-01-15T08:30:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "user_id": 2,
       "products": [
         {
@@ -351,7 +355,7 @@
       "order_date": "2023-02-01T12:15:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "user_id": 3,
       "products": [
         {
