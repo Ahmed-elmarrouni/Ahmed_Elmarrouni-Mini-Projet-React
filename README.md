@@ -14,6 +14,7 @@ This project is a **React-based e-commerce web application** featuring user auth
 6. [API Integration](#api-integration)
 7. [Docker Setup](#docker-setup)
 8. [Screenshots](#screenshots)
+9. [License](#license)
 
 ---
 
@@ -63,26 +64,32 @@ src/
 ## Setup Instructions
 
 ### Prerequisites
+
 - **Node.js** (v18 or later)
 - **npm** (v8 or later)
 
 ### Steps to Run the Application
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Run the JSON Server:**
+
    ```bash
    npm run server
    ```
+
    This will run a mock API at `http://localhost:3000`.
 
-4. **Run the React development server:**
+3. **Run the React development server:**
+
    ```bash
    npm run dev
    ```
+
    Access the application at `http://localhost:5173`.
 
 ---
@@ -100,13 +107,16 @@ src/
 ## API Integration
 
 ### JSON Server
+
 The project uses `db.json` as a mock database, providing the following endpoints:
+
 - **Products**: `http://localhost:3000/products`
 - **Users**: `http://localhost:3000/users`
 - **Orders**: `http://localhost:3000/orders`
 - **Carts**: `http://localhost:3000/carts`
 
 ### Axios Configuration
+
 Axios is used to interact with these endpoints for CRUD operations.
 
 ---
@@ -116,22 +126,76 @@ Axios is used to interact with these endpoints for CRUD operations.
 The project includes a `Dockerfile` and `docker-compose.yml` for containerized development.
 
 1. **Build the Docker image:**
+
    ```bash
    docker build -t mini-store:dev .
    ```
 
 2. **Run the application using Docker Compose:**
+
    ```bash
    docker-compose up
    ```
+
    The React app will be available at `http://localhost:5173`.
 
 ---
 
+## Screenshots
+
+### Home Page
+
+Where all products are displayed:
+![Home Page](./Redme-imgs/image.png)
+
+### Footer
+
+![Footer](./Redme-imgs/image-3.png)
+
+### Product Details
+
+![Product Details](./Redme-imgs/image-1.png)
+
+### My Cart
+
+![My Cart](./Redme-imgs/image-2.png)
+
+### Login for Sellers
+
+![Login](./Redme-imgs/image-6.png)
+
+### Sign-Up Page
+
+![Sign Up](./Redme-imgs/image-4.png)
+
+### Seller's Home Page
+
+![Seller's Home Page](./Redme-imgs/image-7.png)
+
+### Product Data Chart
+
+![Product Data Chart](./Redme-imgs/image-8.png)
+
+### Manage Products
+
+![Manage Products](./Redme-imgs/image-10.png)
+
+### Charts
+
+- **Products in Stock**:
+  ![Products in Stock](./Redme-imgs/image-11.png)
+- **Total Orders per User**:
+  ![Total Orders per User](./Redme-imgs/image-12.png)
+
+### Admin Dashboard
+
+- **Manage Users**:
+  ![Manage Users](./Redme-imgs/image-9.png)
+
+---
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
